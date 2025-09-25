@@ -102,20 +102,6 @@ def payment(driver,email,country):
     zip=explicit_wait(driver,By.ID,"billingPostalCode",timeout=10)
     zip.send_keys("12345") 
     
-    # This works only if the element exists in the DOM at some point within timeout.
-    # If the element doesn’t exist at all until after some other interaction, your explicit_wait will fail if called too early. so either increse timeout or do it manually after some interacion or webdriver wait again as shown in below code
-    
-    # zip_input = WebDriverWait(driver, 5).until(
-    #     EC.visibility_of_element_located((By.ID, "billingPostalCode"))
-    # )
-    # zip_input.send_keys("12345")
-    
-    #In Stripe’s checkout:
-    #The ZIP code input does not exist in the DOM until after you select a country.
-    #The card number, expiry, and CVC inputs are inside iframes, so they are not accessible via driver.find_element directly.
-    #This means your usual explicit_wait cannot find them before the field appears or without switching to iframe.
-    
-    # (bcz input field was not visible in css and span too so u used label)
     label_checkbox = driver.find_element(By.CSS_SELECTOR, "label[for='enableStripePass']")
     label_checkbox.click()
     
